@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template
 from controller.student_addcontroller import add_student
+import hashlib
 
 student_blueprint = Blueprint('student', __name__)
 @student_blueprint.route('/register-student', methods=['POST', 'GET'])
@@ -7,13 +8,14 @@ def add_student_route(Message=None):
     if request.method == 'POST':
         name = request.form['name']
         password = request.form['password']
+        hashed_password= hashlib.sha256(password.encode('utf-8')).hexdigest()
         course = request.form['course']
         schoolname = request.form['schoolname']
         emailid = request.form['emailid']
         mobileno = request.form['mobileno']
         sex = request.form.get('dropdown')
         address = request.form['address']
-        saved_details = add_student(name, password, course, schoolname, emailid, mobileno, sex, address)
+        saved_details = add_student(name, hashed_password, course, schoolname, emailid, mobileno, sex, address)
         from flask_mail import Mail, Message
 
         # Sends mail to the student

@@ -1,6 +1,5 @@
-# A class for student who would register
+import hashlib
 from config import Client
-import bcrypt
 
 
 class Student:
@@ -19,9 +18,17 @@ class Student:
         db_newstudent = Client["studentdata"]
         registered_student = db_newstudent["registeredstudents"]
 
+        password_bytes = self.password.encode('utf-8')  # Encode password as bytes
+        # Print the password value before hashing
+        print("Password Value:", self.password)
+        # Hash the password using SHA256
+        hash_algorithm = hashlib.sha256()
+        hash_algorithm.update(password_bytes)
+        hashed_password = hash_algorithm.hexdigest()
+
         registered_student_data = {
             "name": self.name,
-            "password": self.password,
+            "password": hashed_password,
             "course": self.course,
             "schoolname": self.schoolname,
             "emailid": self.emailid,
@@ -30,21 +37,23 @@ class Student:
             "address": self.address
         }
 
-        registered_student.insert_one(registered_student_data)  # Insert the student data into the collection
+        try:
+            registered_student.insert_one(registered_student_data)  # Insert the student data into the collection
+            return True
+        except:
+            return False
 
     def get_student_data(self):
         db_student = Client["studentdata"]
         registered_student = db_student["registeredstudents"]
+
         try:
             filter = {
-                'emailid': {'$eq': self.emailid},
+                'emailid': self.emailid,
             }
 
             # Execute the query
-            result = list(registered_student.find(filter, {'_id': 0}))[0]
-
+            result = registered_student.find_one(filter, {'_id': 0})
             return result
-
         except:
             return None
-
