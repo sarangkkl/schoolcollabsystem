@@ -6,10 +6,12 @@ def add_student(name, password, course ,schoolname ,emailid , mobileno, sex, add
     db = Client["studentdata"]
     registered_students = db["registeredstudents"]
     get_studentdata= student.get_student_data()
+    print(get_studentdata)
     if get_studentdata == None:
         print('get_studentdata',get_studentdata)
         student.save()
         return True
     else:
+        #Code for calling template for record already exists
         print('already exists')
         return False

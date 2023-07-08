@@ -18,17 +18,10 @@ class Student:
         db_newstudent = Client["studentdata"]
         registered_student = db_newstudent["registeredstudents"]
 
-        password_bytes = self.password.encode('utf-8')  # Encode password as bytes
-        # Print the password value before hashing
-        print("Password Value:", self.password)
-        # Hash the password using SHA256
-        hash_algorithm = hashlib.sha256()
-        hash_algorithm.update(password_bytes)
-        hashed_password = hash_algorithm.hexdigest()
 
         registered_student_data = {
             "name": self.name,
-            "password": hashed_password,
+            "password": self.password,
             "course": self.course,
             "schoolname": self.schoolname,
             "emailid": self.emailid,
@@ -56,4 +49,5 @@ class Student:
             result = registered_student.find_one(filter, {'_id': 0})
             return result
         except:
+
             return None
