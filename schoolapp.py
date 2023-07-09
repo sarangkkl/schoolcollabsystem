@@ -1,6 +1,7 @@
 from flask import Flask
 from blueprints.add_studentblueprint import student_blueprint
 from blueprints.landingpageblueprint import landingPage_blueprint
+from blueprints.studentprofileblueprint import dashboard_blueprint
 from flask_mail import Mail
 from config import Client
 
@@ -8,7 +9,7 @@ from config import Client
 app = Flask(__name__)
 app.register_blueprint(student_blueprint)
 app.register_blueprint(landingPage_blueprint)
-
+app.register_blueprint(dashboard_blueprint)
 #--- Config controls ---#
 app.static_folder = 'static'
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -18,6 +19,9 @@ app.config['MAIL_PASSWORD'] = 'jvobkcyyfarnkmtq'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
+
+#-- Config sessions -- #
+app.config['SECRET_KEY'] = '/t-_"8]Bg:u?RP87!aGW&VrLxq!t&V[C'
 
 
 

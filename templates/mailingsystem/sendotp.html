@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:  #e3eaa7;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color:  #e3eaa7;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: black;
+            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: black;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .signature {
+            text-align: left;
+            margin-top: 40px;
+            color: black;
+        }
+
+        .signature p {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <p>Dear Student,</p>
+        <p>Your code is: {{code}}</p>
+        <div class="signature">
+            <p>Thanks,</p>
+            <p style="font-weight: bold; color: black;">Team - SCS</p>
+        </div>
+    </div>
+</body>
+</html>
