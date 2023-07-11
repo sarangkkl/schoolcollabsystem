@@ -47,12 +47,11 @@ def landingpage_route():
             from schoolapp import app
             mail = Mail(app)
             msg = Message('Here is your Code', sender='tejasjagannatha@gmail.com', recipients=[stored_emailid])
-
-            secret_key = generate_otp.generate_otp()
-            print("landing page",secret_key)
-            msg.html = render_template('mailingsystem/sendotp.html', code=secret_key)
+            key_obj, key_val = generate_otp.generate_otp()
+            msg.html = render_template('mailingsystem/sendotp.html', code=key_val)
             mail.send(msg)
-            session['token'] = secret_key
+            session['token'] = key_obj
+            print("Key obj: ",key_obj)
             return render_template('mfa_check.html', emailid= stored_emailid)
 
 

@@ -1,9 +1,8 @@
 # Code for Generate otp
-import pyotp
+import pyotp, json
 
 def generate_otp():
-    secret_key = pyotp.random_base32()
-    totp = pyotp.TOTP(secret_key)
-    otp = totp.now()
-    return secret_key
-
+    secretkey = pyotp.random_base32()
+    totp = pyotp.TOTP(secretkey)
+    otp_value = totp.now()
+    return secretkey, otp_value
