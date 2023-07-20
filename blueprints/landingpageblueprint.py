@@ -33,34 +33,38 @@ def landingpage_route():
         resultname= get_student_by_name(name)
 
         print(resultname)
-        stored_password = resultname['password']
-        stored_emailid= resultname['emailid']
+        if resultname:
+            stored_password = resultname['password']
+            stored_emailid= resultname['emailid']
 
-        # Hash the entered password using the same algorithm and encoding as the stored password
-        sha256_hash = hashlib.sha256()
-        sha256_hash.update(password.encode('utf-8'))
-        hashed_password = sha256_hash.hexdigest()
+            # Hash the entered password using the same algorithm and encoding as the stored password
+            sha256_hash = hashlib.sha256()
+            sha256_hash.update(password.encode('utf-8'))
+            hashed_password = sha256_hash.hexdigest()
+            valid = 0
 
+            if hashed_password == stored_password:
+                from schoolapp import app
+                mail = Mail(app)
+                msg = Message('Here is your Code', sender='tejasjagannatha@gmail.com', recipients=[stored_emailid])
+                key_obj, key_val = generate_otp.generate_otp()
+                msg.html = render_template('mailingsystem/sendotp.html', code=key_val)
+                mail.send(msg)
+                session['token'] = key_obj
+                print("Key obj: ",key_obj)
+                valid= 1
+                print('valid')
 
+                return render_template('mfa_check.html', emailid= stored_emailid, isvalid= valid)
 
-        if hashed_password == stored_password:
-            from schoolapp import app
-            mail = Mail(app)
-            msg = Message('Here is your Code', sender='tejasjagannatha@gmail.com', recipients=[stored_emailid])
-            key_obj, key_val = generate_otp.generate_otp()
-            msg.html = render_template('mailingsystem/sendotp.html', code=key_val)
-            mail.send(msg)
-            session['token'] = key_obj
-            print("Key obj: ",key_obj)
-
-            return render_template('mfa_check.html', emailid= stored_emailid)
-
+            else:
+                valid = 0
+                print('Invalid')
+                return render_template('mfa_check.html', emailid=None, isvalid=valid)
 
         else:
-            return 'Invalid password'
-
-        #After sign in show him dashboards
-
+            valid= 0
+            return render_template('mfa_check.html', emailid= None, isvalid=valid)
 
     else:
         return render_template('scs.html')
@@ -92,7 +96,6 @@ def reset_user():
                 return None
         result= get_student_byemail(email)
         if result:
-
             #your username is this
             session['password'] = result['password']
             session['name'] = result['name']
@@ -104,7 +107,7 @@ def reset_user():
 
         #if email data is not found
         else:
-            pass
+            return render_template('email_notfound.html')
     else:
         return render_template('resetuser.html')
 
@@ -117,6 +120,7 @@ def change_password():
         # Change request for password
         existing_pass= session.get('password')
         username= session.get('name')
+
         new_pass= request.form['password']
         print(new_pass)
         db_newstudent = Client["studentdata"]
@@ -128,4 +132,6 @@ def change_password():
         myquery = {"name": username}
         newvalues = {"$set": {"password": hashed_password}  }
         registered_student.update_one(myquery, newvalues)
-        print('changed')
+
+        #Successful Password changed
+        return render_template('password_change_successful.html')

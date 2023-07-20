@@ -16,9 +16,11 @@ def dashboard_route():
         isvalid= otp.verify(user_code,valid_window=1)
         #check if user entered right OTP
         if isvalid:
-            return render_template('dashboard.html')
+            isvalid = 1
+            return render_template('dashboard.html', isvalid= isvalid)
 
 
         else:
-            return "Invalid Code or Code expired (30 seconds time to enter code)"
+            isvalid = 0
+            return render_template("dashboard.html", isvalid= isvalid)
 

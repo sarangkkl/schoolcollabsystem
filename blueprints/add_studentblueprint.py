@@ -32,7 +32,7 @@ def add_student_route(Message=None):
             from schoolapp import app
             mail = Mail(app)
             msg = Message('Thanks for joining us!', sender='tejasjagannatha@gmail.com', recipients=[emailid])
-            msg.html = render_template('/mailingsystem/confirmationmail.html')
+            msg.html = render_template('/mailingsystem/confirmationmail.html',name=name )
 
             #To handle fake emailadresses
             try:

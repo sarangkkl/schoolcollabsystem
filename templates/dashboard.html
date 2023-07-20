@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Student Dashboard</title>
-  <style>
+    <title>Student Dashboard</title>
+    <style>
     /* Sidebar Styles */
     .sidebar {
       background-color: #00CCCC;
@@ -52,23 +52,41 @@
     h1 {
       color: #00CCCC;
     }
-  </style>
+
+
+    </style>
 </head>
+
 <body>
-  <div class="sidebar">
+{% if isvalid== 1%}
+<div class="sidebar">
     <h2 class="sidebar-header">Student Dashboard</h2>
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Profile</a></li>
-      <li><a href="#">Grades</a></li>
-      <li><a href="#">Schedule</a></li>
-      <li><a href="#">Messages</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Grades</a></li>
+        <li><a href="#">Schedule</a></li>
+        <li><a href="#">Messages</a></li>
     </ul>
-  </div>
+</div>
 
-  <div class="content">
+<div class="content">
     <h1>Welcome to the Student Dashboard</h1>
     <p>This is the main content area of the dashboard.</p>
-  </div>
+</div>
+{% else %}
+
+
+    <div class="form-container">
+        <h3>Code has expired or Invalid Code</h3>
+        <br>
+        <br>
+        <a href="{{ url_for('landingpage.landingpage_route') }}">Go to Sign in</a>
+        <h2 class="text"><i>"Education is the most powerful weapon which you can use to change the world...!"</i></h2>
+
+    </div>
+
+    {% endif %}
+
 </body>
 </html>
