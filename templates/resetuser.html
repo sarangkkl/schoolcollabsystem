@@ -93,37 +93,22 @@ font-weight: bold;
 font-weight: bold;
     }
 
-    .forgotdetails:hover{
-    background-color: #FF0000;
-font-weight: bold;
-    }
-
-
-
-
-
     </style>
 </head>
 <body>
+
 <div class="container">
     <div class="effect">SCS</div>
     <h3 class="text">School Collaboration System</h3>
     <br>
     <br>
-    <form class="form-container" action="/SCS" method="post">
-        <label for="username"><b>Username</b></label>
-        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+    <form class="form-container" action="/resetuser" method="post">
+        <label for="regid"><b>EmailID</b></label>
+        <input type="text" id="regid" name="regid" placeholder="Enter your registered emailid" required>
         <br>
         <br>
-        <label for="password"><b>Password</b></label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        <br>
-        <br>
-        <button type="submit" name="login">Login</button>
+        <button type="submit" name="forgot">Forgot user/password</button>
 
-        <input type="button" class="signup" value="SignUp" onclick="window.location.href='/register-student'">
-        <!-- Move the "Forgot Details" button here -->
-        <button class="forgotdetails" onclick="window.location.href='/resetuser'">Forgot Details</button>
     </form>
 
     <br><br><br><br><br><br>
