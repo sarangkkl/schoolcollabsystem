@@ -25,24 +25,32 @@ def add_student_route(Message=None):
         address = request.form['address']
 
         saved_details = add_student(name, hashed_password, course, schoolname, emailid, mobileno, sex, address)
-        from flask_mail import Mail, Message
 
-        # Sends mail to the student
-        def send_mail(emailid):
-            from schoolapp import app
-            mail = Mail(app)
-            msg = Message('Thanks for joining us!', sender='tejasjagannatha@gmail.com', recipients=[emailid])
-            msg.html = render_template('/mailingsystem/confirmationmail.html',name=name )
+        if saved_details:
+            from flask_mail import Mail, Message
 
-            #To handle fake emailadresses
-            try:
-                mail.send(msg)
-            except:
-                return render_template('mailingsystem/welcome.html')
+            # Sends mail to the student
+            def send_mail(emailid):
+                from schoolapp import app
+                mail = Mail(app)
+                msg = Message('Thanks for joining us!', sender='tejasjagannatha@gmail.com', recipients=[emailid])
+                msg.html = render_template('/mailingsystem/confirmationmail.html',name=name )
 
-        #call
-        send_mail(emailid)
+                #To handle fake emailadresses or existing address
+                try:
+                    mail.send(msg)
+                except:
+                    return render_template('mailingsystem/welcome.html')
 
-        return render_template('mailingsystem/welcome.html')
+            #call
+            send_mail(emailid)
+            exist= 0
+
+            return render_template('mailingsystem/welcome.html', exist= exist)
+        else:
+
+            exist= 1
+            return render_template('mailingsystem/welcome.html', exist= exist)
+
 
     return render_template('add_student.html')

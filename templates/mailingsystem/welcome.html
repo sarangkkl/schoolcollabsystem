@@ -1,7 +1,7 @@
 <html>
 <head>
-  <title>SCS - School Collaboration System</title>
-  <style>
+    <title>SCS - School Collaboration System</title>
+    <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -95,21 +95,25 @@ font-weight: bold;
 
 
 
-  </style>
+
+    </style>
 </head>
 <body>
 
 <div class="container">
     <div class="effect">SCS</div>
     <h3 class="text">School Collaboration System</h3>
-<br>
-<br>
-
-<h4>Thanks for Joining, you will receive an email shortly!</h4>
+    <br>
+    <br>
+    {% if exist == 0 %}
+    <h4>Thanks for Joining, you will receive an email shortly!</h4>
     <a href="/SCS">click here to sign in</a>
-
+    {% else %}
+    <h3>Email Address or Username already exist!</h3>
+    <a href="/SCS">click here to sign in</a>
     <!-- Motivational quotes for students -->
-<h2 class="text"><i>"Education is the most powerful weapon which you can use to change the world...!"</i></h2>
+    {% endif %}
+    <h2 class="text"><i>"Education is the most powerful weapon which you can use to change the world...!"</i></h2>
 </div>
 
 </body>

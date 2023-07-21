@@ -1,0 +1,14 @@
+How to use the website
+
+- Do git clone of this repository https://github.com/Tejascoder/schoolcollabsystem.git
+
+
+Installs all the required libraries
+- pip install -r requirements.txt
+
+
+To run it local, in editor terminal , runs in local " http://127.0.0.1:5000/SCS "
+
+- python schoolmain.py
+
+

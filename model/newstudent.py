@@ -18,7 +18,6 @@ class Student:
         db_newstudent = Client["studentdata"]
         registered_student = db_newstudent["registeredstudents"]
 
-
         registered_student_data = {
             "name": self.name,
             "password": self.password,
@@ -31,9 +30,24 @@ class Student:
         }
 
         try:
-            registered_student.insert_one(registered_student_data)  # Insert the student data into the collection
-            return True
+            students= list(registered_student.find({}))
+            print("STUDENT")
+            print(students)
+            for student in students:
+                if registered_student_data['name'] == student['name']:
+                    found= 1
+                    return True
+                else:
+                    found = 0
+
+            if not found:
+                registered_student.insert_one(registered_student_data)  # Insert the student data into the collection
+                return True
+            else:
+                return False
+
         except:
+            print('Error')
             return False
 
     def get_student_data(self):
