@@ -36,7 +36,6 @@ class Student:
             for student in students:
                 if registered_student_data['name'] == student['name']:
                     found= 1
-                    return True
                 else:
                     found = 0
 
