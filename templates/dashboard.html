@@ -54,6 +54,7 @@
     }
 
 
+
     </style>
 </head>
 
@@ -75,18 +76,15 @@
     <p>This is the main content area of the dashboard.</p>
 </div>
 {% else %}
-
-
-    <div class="form-container">
-        <h3>Code has expired or Invalid Code</h3>
-        <br>
-        <br>
-        <a href="{{ url_for('landingpage.landingpage_route') }}">Go to Sign in</a>
-        <h2 class="text"><i>"Education is the most powerful weapon which you can use to change the world...!"</i></h2>
-
-    </div>
-
-    {% endif %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+                var userConfirmed = confirm('Code has expired or Invalid Code');
+                if (userConfirmed) {
+                    window.location.href = '{{ url_for('landingpage.landingpage_route') }}';
+                }
+            });
+</script>
+{% endif %}
 
 </body>
 </html>
