@@ -2,6 +2,8 @@ from flask import Flask
 from blueprints.add_studentblueprint import student_blueprint
 from blueprints.landingpageblueprint import landingPage_blueprint
 from blueprints.studentprofileblueprint import dashboard_blueprint
+from blueprints.universityblueprint import university_blueprint
+from blueprints.admin_logins import admin_blueprint
 from flask_mail import Mail
 from config import Client
 
@@ -10,6 +12,9 @@ app = Flask(__name__)
 app.register_blueprint(student_blueprint)
 app.register_blueprint(landingPage_blueprint)
 app.register_blueprint(dashboard_blueprint)
+app.register_blueprint(university_blueprint)
+app.register_blueprint(admin_blueprint)
+
 #--- Config controls ---#
 app.static_folder = 'static'
 app.config['MAIL_SERVER']='smtp.gmail.com'

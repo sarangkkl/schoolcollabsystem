@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centered Buttons with Matching Borders</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #50394c;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #6a287e; /* Purple background color */
+      color: #ffffff;
+      border: 2px solid #6a287e; /* Purple border color */
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+      text-decoration: none;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .button:hover {
+      background-color: #8c44b7; /* Lighter purple on hover */
+      border-color: #8c44b7; /* Lighter purple border on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <h2><b><i>Admin Controls</i></b></h2>
+      <button class="button" onclick="navigateTo('/ul_login_dash')"> <b>University of Limerick</b></button>
+      <button class="button" onclick="navigateTo('/dcu_login_dash')"> <b>Dublin City University</b></button>
+  </div>
+
+  <script>
+    function navigateTo(route) {
+      // Perform the necessary routing logic here.
+      // For demonstration purposes, we'll just simulate changing the location.
+      window.location.href = route;
+    }
+  </script>
+</body>
+</html>
