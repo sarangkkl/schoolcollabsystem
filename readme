@@ -9,6 +9,9 @@ Installs all the required libraries
 
 To run it local, in editor terminal , runs in local " http://127.0.0.1:5000/SCS "
 
+
+for admin - http://127.0.0.1:5000/admindash
+
 - python schoolapp.py
 
 

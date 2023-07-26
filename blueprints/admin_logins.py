@@ -27,5 +27,6 @@ def ul_login_admin():
 @admin_blueprint.route('/ul-makeannouncement', methods=['POST'])
 def ul_make_announcement():
     if request.method == "POST":
-        return render_template("make_announcement.html")
+        print("ULLLLLLL")
+        return render_template("university/make_announcement.html")
     pass
