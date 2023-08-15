@@ -3,10 +3,12 @@ import hashlib
 from config import Client
 from passlib.hash import sha256_crypt
 from flask_mail import Mail, Message
-import pyotp,time
+import pyotp,time, json, threading
 from MFA import generate_otp
 
+
 landingPage_blueprint = Blueprint('landingpage', __name__)
+
 
 @landingPage_blueprint.route('/SCS', methods=['GET', 'POST'])
 def landingpage_route():
@@ -25,14 +27,16 @@ def landingpage_route():
                 }
                 # Execute the query
                 result = registered_student.find_one(filter, {'_id': 0})
-                return result
+                result= {'result': result}
+                return result['result']
+
             except:
                 #Handle HTTP No data found
                 return None
 
         resultname= get_student_by_name(name)
 
-        print(resultname)
+        print("this is result", resultname)
         if resultname:
             stored_password = resultname['password']
             stored_emailid= resultname['emailid']
@@ -54,7 +58,6 @@ def landingpage_route():
                 print("Key obj: ",key_obj)
                 valid= 1
                 print('valid')
-
                 return render_template('mfa_check.html', emailid= stored_emailid, isvalid= valid)
 
             else:
@@ -122,7 +125,7 @@ def change_password():
         username= session.get('name')
 
         new_pass= request.form['password']
-        print(new_pass)
+        print("new pass", new_pass)
         db_newstudent = Client["studentdata"]
         registered_student = db_newstudent["registeredstudents"]
         # Hash the entered password using the same algorithm and encoding as the stored password
@@ -132,6 +135,6 @@ def change_password():
         myquery = {"name": username}
         newvalues = {"$set": {"password": hashed_password}  }
         registered_student.update_one(myquery, newvalues)
-
+        print("Updated")
         #Successful Password changed
         return render_template('password_change_successful.html')
