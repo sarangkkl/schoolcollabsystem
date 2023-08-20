@@ -33,17 +33,26 @@ class Student:
             students= list(registered_student.find({}))
             print("STUDENT")
             print(students)
-            for student in students:
-                if registered_student_data['name'] == student['name']:
-                    found= 1
-                else:
-                    found = 0
 
-            if not found:
-                registered_student.insert_one(registered_student_data)  # Insert the student data into the collection
-                return True
+
+
+            if students:
+                for student in students:
+                    if registered_student_data['name'] == student['name']:
+                        found= 1
+                    else:
+                        found = 0
+
+                if not found:
+                    registered_student.insert_one(registered_student_data)  # Insert the student data into the collection
+                    print("Inserted new")
+                    return True
+                else:
+                    return False
             else:
-                return False
+                registered_student.insert_one(registered_student_data)  # Insert the student data into the collection
+                print("Inserted new")
+                return True
 
         except:
             print('Error')

@@ -1,13 +1,40 @@
 from flask import Blueprint, request, render_template, session
 import hashlib
+import pika
 from config import Client
 from passlib.hash import sha256_crypt
 from flask_mail import Mail, Message
-import pyotp,time
+import pyotp, time, json, threading
 from MFA import generate_otp
 
-landingPage_blueprint = Blueprint('landingpage', __name__)
+def producer(message):
+    connection_parameters= pika.ConnectionParameters('localhost')
+    connection= pika.BlockingConnection(connection_parameters)
+    chanel= connection.channel()
+    chanel.queue_declare(queue= 'login')
 
+    chanel.basic_publish(exchange= '', routing_key= 'login', body= message)
+    print("Message:", message)
+    connection.close()
+
+def on_message_recieved(ch, method, properties, body):
+    print("Message:", body)
+
+
+def consumer():
+    connection_parameters = pika.ConnectionParameters('localhost')
+    connection = pika.BlockingConnection(connection_parameters)
+    chanel = connection.channel()
+    chanel.queue_declare(queue='login')
+    chanel.basic_consume(queue='login', auto_ack=True, on_message_callback=on_message_recieved)
+
+    chanel.start_consuming()  # Add this line to start consuming messages
+
+    connection.close()
+
+
+
+landingPage_blueprint = Blueprint('landingpage', __name__)
 @landingPage_blueprint.route('/SCS', methods=['GET', 'POST'])
 def landingpage_route():
     if request.method == "POST":
@@ -25,14 +52,16 @@ def landingpage_route():
                 }
                 # Execute the query
                 result = registered_student.find_one(filter, {'_id': 0})
-                return result
+                result= {'result': result}
+                return result['result']
+
             except:
                 #Handle HTTP No data found
                 return None
 
         resultname= get_student_by_name(name)
 
-        print(resultname)
+        print("this is result", resultname)
         if resultname:
             stored_password = resultname['password']
             stored_emailid= resultname['emailid']
@@ -54,19 +83,23 @@ def landingpage_route():
                 print("Key obj: ",key_obj)
                 valid= 1
                 print('valid')
-
+                producer(stored_emailid)
                 return render_template('mfa_check.html', emailid= stored_emailid, isvalid= valid)
 
             else:
                 valid = 0
                 print('Invalid')
+                producer(stored_emailid)
+
                 return render_template('mfa_check.html', emailid=None, isvalid=valid)
 
         else:
             valid= 0
+
             return render_template('mfa_check.html', emailid= None, isvalid=valid)
 
     else:
+
         return render_template('scs.html')
 
 
@@ -122,7 +155,7 @@ def change_password():
         username= session.get('name')
 
         new_pass= request.form['password']
-        print(new_pass)
+        print("new pass", new_pass)
         db_newstudent = Client["studentdata"]
         registered_student = db_newstudent["registeredstudents"]
         # Hash the entered password using the same algorithm and encoding as the stored password
@@ -132,6 +165,6 @@ def change_password():
         myquery = {"name": username}
         newvalues = {"$set": {"password": hashed_password}  }
         registered_student.update_one(myquery, newvalues)
-
+        print("Updated")
         #Successful Password changed
         return render_template('password_change_successful.html')

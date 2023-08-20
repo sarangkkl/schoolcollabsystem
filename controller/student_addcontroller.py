@@ -10,6 +10,7 @@ def add_student(name, password, course ,schoolname ,emailid , mobileno, sex, add
     print(get_studentdata)
     if get_studentdata == None:
         print('get_studentdata',get_studentdata)
+        print(student)
         saved= student.save()
         print(saved)
         return saved
