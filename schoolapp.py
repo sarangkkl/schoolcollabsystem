@@ -9,11 +9,12 @@ from config import Client
 
 #--- Flask Setup --#
 app = Flask(__name__)
+
 app.register_blueprint(student_blueprint)
 app.register_blueprint(landingPage_blueprint)
 app.register_blueprint(dashboard_blueprint)
 app.register_blueprint(university_blueprint)
-app.register_blueprint(admin_blueprint)
+app.register_blueprint(admin_blueprint, url_prefix='')
 
 #--- Config controls ---#
 app.static_folder = 'static'
@@ -27,8 +28,6 @@ mail = Mail(app)
 
 #-- Config sessions -- #
 app.config['SECRET_KEY'] = '/t-_"8]Bg:u?RP87!aGW&VrLxq!t&V[C'
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

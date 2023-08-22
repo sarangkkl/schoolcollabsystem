@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shared Resources</title>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5; /* Light gray background */
+        }
+
+        /* Center the content */
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Resource List Styles */
+        .resource-list {
+            background-color: #fff;
+            border: 2px solid #2980B9; /* Blue color */
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+
+        .resource {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #2980B9; /* Blue color */
+            border-radius: 5px;
+            position: relative; /* Add this to make the download link absolute */
+        }
+
+        /* Download Link Styles */
+        .download-link {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #888; /* Gray color */
+        }
+
+        /* Example Styles */
+        .sidebar-header {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #2980B9; /* Blue color */
+        }
+
+        h3 {
+            color: #2980B9; /* Blue color */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <div class="resource-list">
+            <h3>Shared Resources</h3>
+            {% for resource in resources %}
+            <div class="resource">
+                <a class="download-link" href="{{ resource['download_link'] }}" download>Download</a> <!-- Display the download link here -->
+                <h3>{{ resource['title'] }}</h3>
+                <p>{{ resource['description'] }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

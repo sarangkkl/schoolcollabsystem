@@ -1,11 +1,14 @@
 from flask import Blueprint, request, render_template
 from config import Client
 import datetime
+from werkzeug.utils import secure_filename
+from gridfs import GridFS
 
 UL_ADMIN_CODE = '123456'
 DCU_ADMIN_CODE= '654321'
 
 admin_blueprint = Blueprint('adminlogin', __name__)
+
 @admin_blueprint.route('/admindash', methods=['GET'])
 def admin_login():
     return render_template("adminlogin/adminlogin.html")
@@ -105,6 +108,40 @@ def view_link_post():
 
 
 
+@admin_blueprint.route('/share_resources', methods= ['POST'])
+def share_resources():
+    if request.method == "POST":
+        return render_template('university/make_share_resource.html')
 
 
 
+@admin_blueprint.route('/post_shared_resources', methods= ['POST'])
+def share_resources_post():
+    if request.method == 'POST':
+        db = Client["studentdata"]
+
+        fs = GridFS(db, collection='Admin_shareresources')
+
+        f = request.files['file']
+        filename = secure_filename(f.filename)
+        file_id = fs.put(f, filename=filename)
+
+        return 'file uploaded successfully'
+
+@admin_blueprint.route('/view_shared_resources', methods= ['GET'])
+def view_share_resources():
+    db = Client["studentdata"]
+
+    fs = GridFS(db, collection='Admin_shareresources')
+
+    files = fs.find()
+    file_list = []
+
+    for file in files:
+        file_data = {
+            "filename": file.filename,
+            "upload_date": file.upload_date
+        }
+        file_list.append(file_data)
+
+    return render_template('university/view_shared_resources.html', files=file_list)
