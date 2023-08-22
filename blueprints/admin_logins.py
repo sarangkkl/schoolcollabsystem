@@ -43,10 +43,7 @@ def submit_announcement():
         title= request.form['title']
         description= request.form['description']
         db = Client["studentdata"]
-
-        # Choose the collection
         collection = db["Admin_announcement"]
-
         announcement_json= {'title': title, 'description': description, 'timestamp': formatted_date + ' ;' + formatted_time}
         collection.insert_one(announcement_json)
         announcements = collection.find()
@@ -55,11 +52,59 @@ def submit_announcement():
 
 @admin_blueprint.route('/view_announcement', methods= ['GET'])
 def view_announcement():
-
-
     db = Client["studentdata"]
     collection = db["Admin_announcement"]
     announcements = list( collection.find())
-
     return render_template('university/view_announcement.html',data= announcements)
+
+@admin_blueprint.route('/make_meetings', methods= ['POST'])
+def make_meeting():
+    if request.method == 'POST':
+        return render_template('university/make_meeting.html')
+
+@admin_blueprint.route('/create_meetings', methods= ['POST'])
+def create_meeting():
+    title= request.form['title']
+    meeting_link= request.form['meeting_link']
+    db = Client["studentdata"]
+    collection = db["Admin_meetings"]
+    json_data= {'title': title, 'meeting_link': meeting_link}
+    collection.insert_one(json_data)
+    return '<h4> Thanks the meeting has been made '
+
+@admin_blueprint.route('/view_meetings', methods= ['GET'])
+def view_meeting():
+    db = Client["studentdata"]
+    collection = db["Admin_meetings"]
+    meetings = list(collection.find())
+    return render_template('university/view_meetings.html',data= meetings)
+
+
+@admin_blueprint.route('/share_links', methods= ['POST'])
+def share_links():
+    if request.method == "POST":
+        return render_template('university/make_share_link.html')
+
+@admin_blueprint.route('/share_link_post', methods= ['POST'])
+def share_link_post():
+    if request.method == "POST":
+        title = request.form['title']
+        link = request.form['link']
+        db = Client["studentdata"]
+        collection = db["Admin_sharelink"]
+        json_data = {'title': title, 'link': link}
+        collection.insert_one(json_data)
+        return '<h4> Thanks the link has been shared '
+
+@admin_blueprint.route('/view_link_post', methods= ['GET'])
+def view_link_post():
+    db = Client["studentdata"]
+    collection = db["Admin_sharelink"]
+    links = list(collection.find())
+    return render_template('university/view_shared_links.html', data= links)
+
+
+
+
+
 

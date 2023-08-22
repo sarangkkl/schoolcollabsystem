@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Green Themed Dashboard</title>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5; /* Light gray background */
+        }
+
+        /* Center the content */
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Announcements Styles */
+        .announcements {
+            background-color: #fff;
+            border: 2px solid #1E8449; /* Green color */
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+
+        .announcement {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #1E8449; /* Green color */
+            border-radius: 5px;
+            position: relative; /* Add this to make the timestamp absolute */
+        }
+
+        /* Timestamp Styles */
+        .timestamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #888; /* Gray color */
+        }
+
+        /* Example Styles */
+        .sidebar-header {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #1E8449; /* Green color */
+        }
+
+        h3 {
+            color: #1E8449; /* Green color */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <div class="announcements">
+            <h3>Available scheduled meetings</h3>
+            {% for meeting in data %}
+            <div class="announcement">
+                 <h3>{{ meeting['title'] }}</h3>
+                <h4>{{ meeting['meeting_link'] }}</h4>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
