@@ -20,12 +20,11 @@ def admin_login():
 def ul_login_dash():
     return render_template("adminlogin/ul_admin.html")
 
-@admin_blueprint.route('/dcu_login_dash', methods=['POST'])
+
+
+@admin_blueprint.route('/dcu_login_dash', methods=['GET'])
 def dcu_login_dash():
-    if request.method == "POST":
-        print('dcu')
-        if request.form['code'] == '654321':
-            return render_template("adminlogin/dcu-admin-dash.html")
+    return render_template("adminlogin/dcu-admin-dash.html")
 
 
 @admin_blueprint.route('/ul-login', methods=['POST'])
@@ -33,8 +32,8 @@ def ul_login_admin():
     if request.method == "POST":
         if request.form['code'] == "123456":
             return render_template("adminlogin/ul-admin-dash.html")
-
-
+        elif request.form['code'] == '654321':
+            return render_template("adminlogin/dcu-admin-dash.html")
 
 
 @admin_blueprint.route('/make_announcement', methods=['POST'])
