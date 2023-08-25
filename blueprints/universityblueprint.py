@@ -13,5 +13,6 @@ def ul_display():
         #Dcu dashboard
         elif request.form['university'] == "dcu":
             print("DCU")
-            pass
+            return render_template("adminlogin/dcu-admin-dash.html")
+
 

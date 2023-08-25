@@ -18,8 +18,6 @@ def dashboard_route():
         if isvalid:
             isvalid = 1
             return render_template('dashboard.html', isvalid= isvalid)
-
-
         else:
             isvalid = 0
             return render_template("dashboard.html", isvalid= isvalid)
