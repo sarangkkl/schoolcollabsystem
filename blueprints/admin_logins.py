@@ -68,10 +68,26 @@ def view_announcement():
     announcements = list( collection.find())
     return render_template('university/view_announcement.html',data= announcements)
 
+@admin_blueprint.route('/make_announcement_1', methods= ['GET', 'POST'])
+def view_announcement_1():
+    db = Client["studentdata"]
+    collection = db["Admin_announcement"]
+    data= list(collection.find())
+    return render_template('university/make_announcement_1.html', data= data)
+
 @admin_blueprint.route('/make_meetings', methods= ['POST'])
 def make_meeting():
     if request.method == 'POST':
         return render_template('university/make_meeting.html')
+
+@admin_blueprint.route('/make_meetings_1', methods= ['POST'])
+def make_meeting_1():
+    if request.method == 'POST':
+        db = Client["studentdata"]
+        collection = db["Admin_meetings"]
+        data = list(collection.find())
+        return render_template('university/view_meetings_1.html',data=data)
+
 
 @admin_blueprint.route('/create_meetings', methods= ['POST'])
 def create_meeting():
@@ -95,6 +111,17 @@ def view_meeting():
 def share_links():
     if request.method == "POST":
         return render_template('university/make_share_link.html')
+
+
+@admin_blueprint.route('/share_links_1', methods= ['POST'])
+def share_links_1():
+    if request.method == "POST":
+        db = Client["studentdata"]
+        collection = db["Admin_sharelink"]
+        links = list(collection.find())
+        return render_template('university/view_shared_links_1.html', data= links)
+
+
 
 @admin_blueprint.route('/share_link_post', methods= ['POST'])
 def share_link_post():
@@ -155,3 +182,9 @@ def view_shared_resources():
     else:
         files = os.listdir(r'C:/Users/Tejas Jagannatha/PycharmProjects/schoolcollab_Dissertation/shared_resources')
         return render_template('university/view_shared_resources.html', files=files)
+
+@admin_blueprint.route('/view_shared_resources_1', methods=['GET', 'POST'])
+def view_shared_resources_1():
+    if request.method == "POST":
+        files = os.listdir(r'C:/Users/Tejas Jagannatha/PycharmProjects/schoolcollab_Dissertation/shared_resources')
+        return render_template('university/view_shared_resources_1.html', files=files)

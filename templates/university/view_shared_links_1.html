@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Blue Themed Dashboard</title>
+    <title>Green Themed Dashboard</title>
     <style>
         /* General Styling */
         body {
@@ -55,21 +55,23 @@
         h3 {
             color: #1E8449; /* Green color */
         }
+
     </style>
 </head>
 
 <body>
+<form action="/share_links_1" method="post">
     <div class="center">
         <div class="announcements">
-            <h3>View Meetings</h3>
-            {% for announcement in data %}
+            <h3>Available shared links</h3>
+            {% for meeting in data %}
             <div class="announcement">
-                <span class="timestamp"><b>{{ announcement['timestamp'] }}</b></span> <!-- Display the timestamp here -->
-                <h3>{{ announcement['title'] }}</h3>
-                <h4>{{ announcement['description'] }}</h4>
+                <h3>{{ meeting['title'] }}</h3>
+                <h4>{{ meeting['link'] }}</h4>
             </div>
             {% endfor %}
         </div>
     </div>
+</form>
 </body>
 </html>

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Blue Themed Dashboard</title>
+    <title>Bluish Themed Dashboard</title>
     <style>
         /* General Styling */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
+            background-color: #E0EAF4; /* Bluish gray background */
         }
 
         /* Center the content */
@@ -21,7 +22,7 @@
         /* Announcements Styles */
         .announcements {
             background-color: #fff;
-            border: 2px solid #1E8449; /* Green color */
+            border: 2px solid #3498DB; /* Blue color */
             border-radius: 5px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -31,7 +32,7 @@
         .announcement {
             margin-bottom: 10px;
             padding: 10px;
-            border: 1px solid #1E8449; /* Green color */
+            border: 1px solid #3498DB; /* Blue color */
             border-radius: 5px;
             position: relative; /* Add this to make the timestamp absolute */
         }
@@ -49,11 +50,11 @@
         .sidebar-header {
             font-size: 1.8em;
             margin-bottom: 20px;
-            color: #1E8449; /* Green color */
+            color: #3498DB; /* Blue color */
         }
 
         h3 {
-            color: #1E8449; /* Green color */
+            color: #3498DB; /* Blue color */
         }
     </style>
 </head>
@@ -61,7 +62,7 @@
 <body>
     <div class="center">
         <div class="announcements">
-            <h3>View Meetings</h3>
+            <h3>View Announcement</h3>
             {% for announcement in data %}
             <div class="announcement">
                 <span class="timestamp"><b>{{ announcement['timestamp'] }}</b></span> <!-- Display the timestamp here -->

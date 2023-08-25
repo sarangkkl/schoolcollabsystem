@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Blue Themed Dashboard</title>
+    <title>Shared Resources</title>
     <style>
+         .download-link {
+            /* ... (your existing styles) ... */
+            text-decoration: none; /* Remove underline from the link */
+        }
         /* General Styling */
         body {
             margin: 0;
@@ -18,26 +22,26 @@
             height: 100vh;
         }
 
-        /* Announcements Styles */
-        .announcements {
+        /* Resource List Styles */
+        .resource-list {
             background-color: #fff;
-            border: 2px solid #1E8449; /* Green color */
+            border: 2px solid #2980B9; /* Blue color */
             border-radius: 5px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 400px;
         }
 
-        .announcement {
+        .resource {
             margin-bottom: 10px;
             padding: 10px;
-            border: 1px solid #1E8449; /* Green color */
+            border: 1px solid #2980B9; /* Blue color */
             border-radius: 5px;
-            position: relative; /* Add this to make the timestamp absolute */
+            position: relative; /* Add this to make the download link absolute */
         }
 
-        /* Timestamp Styles */
-        .timestamp {
+        /* Download Link Styles */
+        .download-link {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -49,27 +53,30 @@
         .sidebar-header {
             font-size: 1.8em;
             margin-bottom: 20px;
-            color: #1E8449; /* Green color */
+            color: #2980B9; /* Blue color */
         }
 
         h3 {
-            color: #1E8449; /* Green color */
+            color: #2980B9; /* Blue color */
         }
+
     </style>
 </head>
 
 <body>
-    <div class="center">
-        <div class="announcements">
-            <h3>View Meetings</h3>
-            {% for announcement in data %}
-            <div class="announcement">
-                <span class="timestamp"><b>{{ announcement['timestamp'] }}</b></span> <!-- Display the timestamp here -->
-                <h3>{{ announcement['title'] }}</h3>
-                <h4>{{ announcement['description'] }}</h4>
+<form action="/view_shared_resources" method="get">
+<body>
+     <div class="center">
+        <div class="resource-list">
+            <h3>Shared Resources</h3>
+            {% for filename in files %}
+            <div class="resource">
+                <a class="download-link" href="{{ url_for('adminlogin.view_shared_resources', filename=filename) }}" download="{{ filename }}">Download</a>
+                <h3>{{ filename }}</h3>
             </div>
             {% endfor %}
         </div>
     </div>
+</form>
 </body>
 </html>
