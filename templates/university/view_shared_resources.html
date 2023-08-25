@@ -3,6 +3,10 @@
 <head>
     <title>Shared Resources</title>
     <style>
+         .download-link {
+            /* ... (your existing styles) ... */
+            text-decoration: none; /* Remove underline from the link */
+        }
         /* General Styling */
         body {
             margin: 0;
@@ -56,21 +60,24 @@
         h3 {
             color: #2980B9; /* Blue color */
         }
+
     </style>
 </head>
 
 <body>
-    <div class="center">
+<form action="/view_shared_resources" method="get">
+<body>
+     <div class="center">
         <div class="resource-list">
             <h3>Shared Resources</h3>
-            {% for resource in resources %}
+            {% for filename in files %}
             <div class="resource">
-                <a class="download-link" href="{{ resource['download_link'] }}" download>Download</a> <!-- Display the download link here -->
-                <h3>{{ resource['title'] }}</h3>
-                <p>{{ resource['description'] }}</p>
+                <a class="download-link" href="{{ url_for('adminlogin.view_shared_resources', filename=filename) }}" download="{{ filename }}">Download</a>
+                <h3>{{ filename }}</h3>
             </div>
             {% endfor %}
         </div>
     </div>
+</form>
 </body>
 </html>

@@ -1,8 +1,11 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, redirect, url_for
 from config import Client
 import datetime
 from werkzeug.utils import secure_filename
 from gridfs import GridFS
+
+import bson,json, os
+from config import PATH
 
 UL_ADMIN_CODE = '123456'
 DCU_ADMIN_CODE= '654321'
@@ -114,34 +117,36 @@ def share_resources():
         return render_template('university/make_share_resource.html')
 
 
-
 @admin_blueprint.route('/post_shared_resources', methods= ['POST'])
 def share_resources_post():
     if request.method == 'POST':
+
+        from schoolapp import app
+        from config import PATH
+        app.config['UPLOAD_FOLDER'] = PATH
+        UPLOAD_FOLDER = '/path/to/upload/folder'
+        ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'xlsx', 'doc'}
+
         db = Client["studentdata"]
+        file = request.files['file']
 
-        fs = GridFS(db, collection='Admin_shareresources')
+        def allowed_file(filename):
+            return '.' in filename and \
+                   filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-        f = request.files['file']
-        filename = secure_filename(f.filename)
-        file_id = fs.put(f, filename=filename)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+            return 'File uploaded successfully'
+        else:
+            return 'Invalid file format or no file provided'
 
-        return 'file uploaded successfully'
-
-@admin_blueprint.route('/view_shared_resources', methods= ['GET'])
-def view_share_resources():
-    db = Client["studentdata"]
-
-    fs = GridFS(db, collection='Admin_shareresources')
-
-    files = fs.find()
-    file_list = []
-
-    for file in files:
-        file_data = {
-            "filename": file.filename,
-            "upload_date": file.upload_date
-        }
-        file_list.append(file_data)
-
-    return render_template('university/view_shared_resources.html', files=file_list)
+@admin_blueprint.route('/view_shared_resources', methods=['GET', 'POST'])
+def view_shared_resources():
+    if request.method == "POST":
+        # Handle POST requests as needed
+        pass
+    else:
+        files = os.listdir(r'C:/Users/Tejas Jagannatha/PycharmProjects/schoolcollab_Dissertation/shared_resources')
+        return render_template('university/view_shared_resources.html', files=files)
