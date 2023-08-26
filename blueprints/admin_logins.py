@@ -51,7 +51,7 @@ def dcu_make_announcement_1():
         collection = db["Admin_announcement"]
         json_data= {'title':title, 'link': link}
         collection.insert_one(json_data)
-
+        return render_template('university/make_announcement_1.html')
         return "<h2>Thanks.The announcement has been made</h2>"
     else:
         return render_template("university/make_announcement_1.html")
