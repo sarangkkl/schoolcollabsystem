@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Green Themed Dashboard</title>
+    <title>Blue Themed Dashboard</title>
     <style>
         /* General Styling */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
+            background-color: #f5f5f5; /* Light gray background */
         }
 
         /* Center the content */
@@ -21,7 +22,7 @@
         /* Announcements Styles */
         .announcements {
             background-color: #fff;
-            border: 2px solid #1E8449; /* Green color */
+            border: 2px solid #2980B9; /* Blue color */
             border-radius: 5px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -31,7 +32,7 @@
         .announcement {
             margin-bottom: 10px;
             padding: 10px;
-            border: 1px solid #1E8449; /* Green color */
+            border: 1px solid #2980B9; /* Blue color */
             border-radius: 5px;
             position: relative; /* Add this to make the timestamp absolute */
         }
@@ -49,29 +50,26 @@
         .sidebar-header {
             font-size: 1.8em;
             margin-bottom: 20px;
-            color: #1E8449; /* Green color */
+            color: #2980B9; /* Blue color */
         }
 
         h3 {
-            color: #1E8449; /* Green color */
+            color: #2980B9; /* Blue color */
         }
-
     </style>
 </head>
 
 <body>
-<form action="/share_links_1" method="post">
     <div class="center">
         <div class="announcements">
             <h3>Available shared links</h3>
             {% for meeting in data %}
             <div class="announcement">
-                <h3>{{ meeting['title'] }}</h3>
+                 <h3>{{ meeting['title'] }}</h3>
                 <h4>{{ meeting['link'] }}</h4>
             </div>
             {% endfor %}
         </div>
     </div>
-</form>
 </body>
 </html>

@@ -41,6 +41,24 @@ def ul_make_announcement():
     if request.method == "POST":
         return render_template("university/make_announcement.html")
 
+
+@admin_blueprint.route('/make_announcement_1', methods=['POST'])
+def dcu_make_announcement_1():
+    if request.method == "POST":
+        title= request.form.get("title", False)
+        link= request.form.get("link", False)
+        db = Client["studentdata"]
+        collection = db["Admin_announcement"]
+        json_data= {'title':title, 'link': link}
+        collection.insert_one(json_data)
+
+        return "<h2>Thanks.The announcement has been made</h2>"
+    else:
+        return render_template("university/make_announcement_1.html")
+
+
+
+
 @admin_blueprint.route('/submit-announcement', methods= ['POST'])
 def submit_announcement():
     if request.method == "POST":
@@ -67,36 +85,42 @@ def view_announcement():
     announcements = list( collection.find())
     return render_template('university/view_announcement.html',data= announcements)
 
-@admin_blueprint.route('/make_announcement_1', methods= ['GET', 'POST'])
-def view_announcement_1():
-    db = Client["studentdata"]
-    collection = db["Admin_announcement"]
-    data= list(collection.find())
-    return render_template('university/make_announcement_1.html', data= data)
 
 @admin_blueprint.route('/make_meetings', methods= ['POST'])
 def make_meeting():
     if request.method == 'POST':
         return render_template('university/make_meeting.html')
 
-@admin_blueprint.route('/make_meetings_1', methods= ['POST'])
+@admin_blueprint.route('/make_meetings_1', methods=['POST', 'GET'])
 def make_meeting_1():
+    db = Client["studentdata"]
+    collection = db["Admin_meetings"]
     if request.method == 'POST':
-        db = Client["studentdata"]
-        collection = db["Admin_meetings"]
-        data = list(collection.find())
-        return render_template('university/view_meetings_1.html',data=data)
+        title = request.form.get('title', False)
+        meeting_link = request.form.get('link',False)
+
+        if title and meeting_link:
+            json_data = {'title': title, 'meeting_link': meeting_link}
+            collection.insert_one(json_data)
+            return '<h4>Thanks the meeting has been made</h4>'
+        return render_template('university/make_meeting_1.html')
+
+
+    else:
+        return render_template('university/make_meeting_1.html')
 
 
 @admin_blueprint.route('/create_meetings', methods= ['POST'])
 def create_meeting():
-    title= request.form['title']
-    meeting_link= request.form['meeting_link']
-    db = Client["studentdata"]
-    collection = db["Admin_meetings"]
-    json_data= {'title': title, 'meeting_link': meeting_link}
-    collection.insert_one(json_data)
-    return '<h4> Thanks the meeting has been made '
+
+    if request.method == 'POST':
+        title= request.form['title']
+        meeting_link= request.form['meeting_link']
+        db = Client["studentdata"]
+        collection = db["Admin_meetings"]
+        json_data= {'title': title, 'meeting_link': meeting_link}
+        collection.insert_one(json_data)
+        return '<h4> Thanks the meeting has been made '
 
 @admin_blueprint.route('/view_meetings', methods= ['GET'])
 def view_meeting():
