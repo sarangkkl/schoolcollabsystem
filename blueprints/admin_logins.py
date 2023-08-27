@@ -3,7 +3,6 @@ from config import Client
 import datetime
 from werkzeug.utils import secure_filename
 from gridfs import GridFS
-
 import bson,json, os
 from config import PATH
 
@@ -22,9 +21,10 @@ def ul_login_dash():
 
 
 
-@admin_blueprint.route('/dcu_login_dash', methods=['GET'])
+@admin_blueprint.route('/dcu_login_dash', methods=['GET',"POST"])
 def dcu_login_dash():
-    return render_template("adminlogin/dcu-admin-dash.html")
+    if request.method == "POST":
+        return render_template("adminlogin/dcu_admin.html")
 
 
 @admin_blueprint.route('/ul-login', methods=['POST'])
@@ -42,21 +42,21 @@ def ul_make_announcement():
         return render_template("university/make_announcement.html")
 
 
-@admin_blueprint.route('/make_announcement_1', methods=['POST'])
+@admin_blueprint.route('/make_announcement_1', methods=['POST', "GET"])
 def dcu_make_announcement_1():
     if request.method == "POST":
-        title= request.form.get("title", False)
-        link= request.form.get("link", False)
-        db = Client["studentdata"]
-        collection = db["Admin_announcement"]
-        json_data= {'title':title, 'link': link}
-        collection.insert_one(json_data)
-        return render_template('university/make_announcement_1.html')
-        return "<h2>Thanks.The announcement has been made</h2>"
+        title = request.form.get("title")
+        link = request.form.get("link")
+        if title and link:
+            db = Client["studentdata"]
+            collection = db["Admin_announcement"]
+            announcement_json = {'title': title, 'link': link}
+            collection.insert_one(announcement_json)
+            return "<h3>Thanks for making the announcement.</h3>"
+        return render_template("university/make_announcement_1.html", success= True)
+
     else:
-        return render_template("university/make_announcement_1.html")
-
-
+        return render_template("university/make_announcement_1.html", success=False)
 
 
 @admin_blueprint.route('/submit-announcement', methods= ['POST'])
@@ -133,20 +133,32 @@ def view_meeting():
 @admin_blueprint.route('/share_links', methods= ['POST'])
 def share_links():
     if request.method == "POST":
+        db = Client["studentdata"]
+        collection = db["Admin_sharelink"]
+        links = list(collection.find())
+        title = request.form.get('title', False)
+        link = request.form.get('link', False)
+        return render_template('university/make_share_link.html')
+    else:
         return render_template('university/make_share_link.html')
 
-
-@admin_blueprint.route('/share_links_1', methods= ['POST'])
+@admin_blueprint.route('/share_links_1', methods= ['POST', 'GET'])
 def share_links_1():
     if request.method == "POST":
         db = Client["studentdata"]
         collection = db["Admin_sharelink"]
         links = list(collection.find())
-        return render_template('university/view_shared_links_1.html', data= links)
+        title = request.form.get('title', False)
+        link = request.form.get('link', False)
+        json= {'title':title, 'link':link}
+        data= collection.insert_one(json)
 
+        if data:
+            return render_template('university/make_share_link_1.html')
 
+    else:
+        return render_template('university/make_share_link_1.html')
 
-@admin_blueprint.route('/share_link_post', methods= ['POST'])
 def share_link_post():
     if request.method == "POST":
         title = request.form['title']
@@ -164,18 +176,42 @@ def view_link_post():
     links = list(collection.find())
     return render_template('university/view_shared_links.html', data= links)
 
-
-
 @admin_blueprint.route('/share_resources', methods= ['POST'])
 def share_resources():
     if request.method == "POST":
         return render_template('university/make_share_resource.html')
 
+@admin_blueprint.route('/share_resources_1', methods= ['POST', 'GET'])
+def share_resources_1():
+    if request.method == 'POST':
+        from schoolapp import app
+        from config import PATH
+        app.config['UPLOAD_FOLDER']= PATH
+        ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'xlsx', 'doc'}
 
+        def allowed_file(filename):
+            return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+        if 'file' not in request.files:
+            return render_template("university/make_share_resources_1.html")
+
+        file = request.files['file']
+
+        if file.filename == '':
+            return 'No selected file'
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+            return 'File uploaded successfully'
+        else:
+            return 'Invalid file format or no file provided'
+    else:
+        return render_template("university/make_share_resources_1.html")
 @admin_blueprint.route('/post_shared_resources', methods= ['POST'])
 def share_resources_post():
     if request.method == 'POST':
-
         from schoolapp import app
         from config import PATH
         app.config['UPLOAD_FOLDER'] = PATH

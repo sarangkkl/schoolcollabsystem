@@ -3,8 +3,6 @@
 <head>
     <title>Blue Form Template</title>
     <style>
-
-
         /* General Styling */
         body {
             margin: 0;
@@ -42,7 +40,8 @@
             margin-bottom: 5px;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -55,39 +54,28 @@
         }
 
         .form-group input[type="submit"]:hover {
-            background-color: #1E6098; /* Darker blue on hover */
-        }
-
-        .success-message {
-            text-align: center;
-            margin-top: 20px;
-            color: #1E6098; /* Darker blue color */
+            background-color: #1A65A1; /* Darker blue on hover */
         }
     </style>
-
-
 </head>
 <body>
-    <div class="form-container">
-        <h2>Share Links</h2>
-        <form action="/share_links_1" method="post">
-            <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
-            </div>
+<div class="form-container">
+    <h2>Share Resources</h2>
+    <form action="/share_resources_1" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
 
-            <div class="form-group">
-                <label for="link">Link:</label>
-                <input type="text" id="link" name="link" required>
-            </div>
+        <div class="form-group">
+            <label for="file">Upload File:</label>
+            <input type="file" id="file" name="file">
+        </div>
 
-            <div class="form-group">
-                <input id= 'form' type="submit" value="Submit" onclick="getInputValue()">
-            </div>
-        </form>
-
-    </div>
-
-
+        <div class="form-group">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
 </body>
 </html>

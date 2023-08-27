@@ -60,7 +60,7 @@
 <body>
     <div class="form-container">
         <h2>Make Announcements</h2>
-        <form action="/make_announcement_1" method="post">
+        <form id="announcement-form" action="/make_announcement_1" method="post">
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" required>
@@ -72,9 +72,11 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" >
             </div>
         </form>
+        <h3 id="success-message" style="text-align: center; font-weight: bold; color: #2980B9; display: none;">Thanks for making the announcement</h3>
     </div>
+
 </body>
 </html>
