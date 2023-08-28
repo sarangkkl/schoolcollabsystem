@@ -17,6 +17,7 @@ def admin_login():
 
 @admin_blueprint.route('/ul_login_dash', methods=['GET'])
 def ul_login_dash():
+
     return render_template("adminlogin/ul_admin.html")
 
 
@@ -25,6 +26,7 @@ def ul_login_dash():
 def dcu_login_dash():
     if request.method == "POST":
         cns = request.form.get('cns', False)
+
         if cns == '654321':
             return render_template("adminlogin/dcu-admin-dash.html")
 
