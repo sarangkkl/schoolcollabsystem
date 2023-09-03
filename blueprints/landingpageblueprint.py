@@ -131,18 +131,3 @@ def change_password():
         registered_student.update_one(myquery, newvalues)
         return render_template('password_change_successful.html')
 
-
-def start_consumers():
-    connection_parameters = pika.ConnectionParameters('localhost')
-    connection = pika.BlockingConnection(connection_parameters)
-    channel = connection.channel()
-
-    # Declare the 'login' queue
-    channel.queue_declare(queue='login')
-
-    consumer_thread = threading.Thread(target=consumer, args=(connection_parameters,))
-    consumer_thread.start()
-    consume_single_message(channel)  # Consume a single message
-
-start_consumers()
-
