@@ -8,7 +8,7 @@ import pyotp, time, threading
 from MFA import generate_otp
 
 def producer(message):
-    rabbitmq_url = "amqps://admin:20V5uRTPdMLtt3KpwIJ42tYUlz6BvDg5@ecp5x6.stackhero-network.com:5671"
+    rabbitmq_url = "amqps://admin:0EGrOEdfYJSPCPjhKc5JHP2k8o5txxlJ@v8q46g.stackhero-network.com:5671"
 
     connection_parameters = pika.URLParameters(rabbitmq_url)
     connection = pika.BlockingConnection(connection_parameters)
