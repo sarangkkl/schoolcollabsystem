@@ -18,15 +18,11 @@ def admin_login():
 
 @admin_blueprint.route('/ul_login_dash', methods=['GET', 'POST'])
 def ul_login_dash():
-<<<<<<< HEAD
     if request.method == "POST":
         if request.form['code'] == "123456":
             return render_template('university/Ul_landingpage.html')
-=======
 
     return render_template("adminlogin/ul_admin.html")
-
->>>>>>> 'testing-OTPfeature'
 
 
 @admin_blueprint.route('/dcu_login_dash', methods=['GET',"POST"])
@@ -121,7 +117,7 @@ def make_meeting():
 @admin_blueprint.route('/make_meetings_1', methods=['POST', 'GET'])
 def make_meeting_1():
     db = Client["studentdata"]
-    collection = db["Admin_meetings"]
+    collection = db["Admin_meetings_1"]
     if request.method == 'POST':
         title = request.form.get('title', False)
         meeting_link = request.form.get('link',False)
@@ -181,7 +177,7 @@ def share_links():
 def share_links_1():
     if request.method == "POST":
         db = Client["studentdata"]
-        collection = db["Admin_sharelink"]
+        collection = db["Admin_sharelink_1"]
         links = list(collection.find())
         title = request.form.get('title', False)
         link = request.form.get('link', False)
@@ -191,18 +187,6 @@ def share_links_1():
         return render_template('university/make_share_link_1.html')
     else:
         return render_template('university/make_share_link_1.html')
-
-
-@admin_blueprint.route('/share_liasfnks_1', methods= ['POST', 'GET'])
-def share_lin():
-    if request.method == "POST":
-        db = Client["studentdata"]
-        collection = db["Admin_sharelink"]
-        links = list(collection.find())
-        print(links)
-        if links:
-            return render_template('university/view_shared_links_1.html' ,  data= links)
-
 
 
 def share_link_post():
