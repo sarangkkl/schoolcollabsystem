@@ -210,7 +210,7 @@ def view_link_post():
 @admin_blueprint.route('/view_link_post_1', methods= ['GET', "POST"])
 def view_link_post_1():
     db = Client["studentdata"]
-    collection = db["Admin_sharelink"]
+    collection = db["Admin_sharelink_1"]
     links = list(collection.find())
     return render_template('university/view_shared_links_1.html', data= links)
 
