@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Green Themed Dashboard</title>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: #2980B9; /* Green color */
+            color: #fff;
+            height: 100vh;
+            width: 300px;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #000000; /* Light black on hover */
+        }
+
+        /* Main Content Styles */
+        .content {
+            margin-left: 320px;
+            padding: 20px;
+        }
+
+        /* Example Styles */
+        .sidebar-header {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: black; /* Green color */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2 class="sidebar-header">Colaiste Nano Naggle School</h2>
+        <ul>
+            <li><a href="/view_announcement_1">View New Announcements</a></li>
+            <li><a href="/view_meetings_1">View Meetings</a></li>
+            <li><a href="/view_link_post_1">View Shared Links</a></li>
+            <li><a href="/view_shared_resources_1">View Resources Shared</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h1>Welcome to the Colaiste Nano Naggle School Dashboard</h1>
+    </div>
+
+
+</body>
+</html>

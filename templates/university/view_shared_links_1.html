@@ -1,80 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Blue Form Template</title>
+    <title>Blue Themed Dashboard</title>
     <style>
         /* General Styling */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
+        }
+
+        /* Center the content */
+        .center {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background-color: #2980B9; /* Blue color */
+            height: 100vh;
         }
 
-        /* Form Styling */
-        .form-container {
+        /* Announcements Styles */
+        .announcements {
             background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #2980B9; /* Blue color */
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .form-group input {
-            padding: 10px;
-            border: 1px solid #ccc;
+            border: 2px solid #1E8449; /* Green color */
             border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
         }
 
-        .form-group input[type="submit"] {
-            background-color: #2980B9; /* Blue color */
-            color: #fff;
-            cursor: pointer;
+        .announcement {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #1E8449; /* Green color */
+            border-radius: 5px;
+            position: relative; /* Add this to make the timestamp absolute */
         }
 
-        .form-group input[type="submit"]:hover {
-            background-color: #1F5A85; /* Darker blue on hover */
+        /* Timestamp Styles */
+        .timestamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #888; /* Gray color */
+        }
+
+        /* Example Styles */
+        .sidebar-header {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #1E8449; /* Green color */
+        }
+
+        h3 {
+            color: #1E8449; /* Green color */
+        }
+
+        /* Link Styles */
+        h4 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     </style>
 </head>
+
 <body>
-    <div class="form-container">
-        <h2>Make Shared Links</h2>
-        <form action="/make_meetings_1" method="post">
-            <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
+    <div class="center">
+        <div class="announcements">
+            <h3>View Shared Links</h3>
+            {% for announcement in data %}
+            <div class="announcement">
+                <span class="timestamp"><b>{{ announcement['timestamp'] }}</b></span> <!-- Display the timestamp here -->
+                <h3>{{ announcement['title'] }}</h3>
+                <h4>{{ announcement['link'] }}</h4>
             </div>
-
-            <div class="form-group">
-                <label for="meeting_link">Link:</label>
-                <input type="text" id="meeting_link" name="link" required>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Submit">
-            </div>
-        </form>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>

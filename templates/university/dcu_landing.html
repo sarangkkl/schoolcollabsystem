@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blue Themed Dashboard</title>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: white; /* Blue background color */
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: #3498DB; /* Blue color */
+            color: #fff;
+            height: 100vh;
+            width: 300px;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #000000; /* Light black on hover */
+        }
+
+        /* Main Content Styles */
+        .content {
+            margin-left: 320px;
+            padding: 20px;
+        }
+
+        /* Example Styles */
+        .sidebar-header {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #3498DB; /* Blue color */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2 class="sidebar-header">Colaiste Nano Naggle School Admin Dashboard</h2>
+        <ul>
+            <li><a onclick="postForm('/make_announcement_1')">Make Announcement</a></li>
+            <li><a onclick="postForm('/make_meetings_1')">Make Meetings</a></li>
+            <li><a onclick="postForm('/share_links_1')">Make Share Links</a></li>
+            <li><a onclick="postForm('/share_resources_1')">Make Share Resources</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h1 style="color:black">Welcome Admin</h1>
+    </div>
+
+    <script>
+        function postForm(action) {
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = action;
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+</html>

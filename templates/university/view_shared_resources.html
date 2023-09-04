@@ -61,18 +61,20 @@
             color: #2980B9; /* Blue color */
         }
 
+
     </style>
 </head>
 
 <body>
 <form action="/view_shared_resources_1" method="get">
-<body>
-     <div class="center">
+    <body>
+    <div class="center">
         <div class="resource-list">
             <h3>Shared Resources</h3>
             {% for filename in files %}
             <div class="resource">
-                <a class="download-link" href="{{ url_for('adminlogin.view_shared_resources_1', filename=filename) }}" download="{{ filename }}">Download</a>
+                <a class="download-link" href="{{ url_for('adminlogin.download_file', filename=filename) }}"
+                   download="{{ filename }}">Download</a>
                 <h3>{{ filename }}</h3>
             </div>
             {% endfor %}

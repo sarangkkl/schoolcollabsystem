@@ -1,6 +1,7 @@
-from flask import Blueprint, request, render_template, redirect, url_for
-from config import Client
+from flask import Blueprint, request, render_template, redirect, url_for, send_file, app
+from config import Client, PATH
 import datetime
+import pika
 from werkzeug.utils import secure_filename
 from gridfs import GridFS
 import bson,json, os
@@ -18,10 +19,8 @@ def admin_login():
 @admin_blueprint.route('/ul_login_dash', methods=['GET', 'POST'])
 def ul_login_dash():
     if request.method == "POST":
-        ihs= request.form.get('code', False)
-        print(ihs)
-        return render_template("adminlogin/ul-admin-dash.html")
-
+        if request.form['code'] == "123456":
+            return render_template('university/Ul_landingpage.html')
 
 
 @admin_blueprint.route('/dcu_login_dash', methods=['GET',"POST"])
@@ -39,6 +38,7 @@ def dcu_login_dash():
 
     else:
         return render_template("adminlogin/dcu_admin.html")
+
 @admin_blueprint.route('/ul-login', methods=['POST'])
 def ul_login_admin():
     if request.method == "POST":
@@ -61,7 +61,7 @@ def dcu_make_announcement_1():
         link = request.form.get("link")
         if title and link:
             db = Client["studentdata"]
-            collection = db["Admin_announcement"]
+            collection = db["Admin_announcement_1"]
             announcement_json = {'title': title, 'link': link}
             collection.insert_one(announcement_json)
             return "<h3>Thanks for making the announcement.</h3>"
@@ -96,6 +96,14 @@ def view_announcement():
     collection = db["Admin_announcement"]
     announcements = list( collection.find())
     return render_template('university/view_announcement.html',data= announcements)
+
+
+@admin_blueprint.route('/view_announcement_1', methods= ['GET'])
+def view_announcement_1():
+    db = Client["studentdata"]
+    collection = db["Admin_announcement_1"]
+    announcements = list( collection.find())
+    return render_template('university/view_announcement_1.html',data= announcements)
 
 
 @admin_blueprint.route('/make_meetings', methods= ['POST'])
@@ -141,6 +149,12 @@ def view_meeting():
     meetings = list(collection.find())
     return render_template('university/view_meetings.html',data= meetings)
 
+@admin_blueprint.route('/view_meetings_1', methods= ['GET', 'POST'])
+def view_meeting_1():
+    db = Client["studentdata"]
+    collection = db["Admin_meetings"]
+    meetings = list(collection.find())
+    return render_template('university/view_meetings_1.html',data= meetings)
 
 @admin_blueprint.route('/share_links', methods= ['POST'])
 def share_links():
@@ -150,11 +164,13 @@ def share_links():
         links = list(collection.find())
         title = request.form.get('title', False)
         link = request.form.get('link', False)
+        json= {'title':title, 'link' : link}
+        collection.insert_one(json)
         return render_template('university/make_share_link.html')
     else:
         return render_template('university/make_share_link.html')
 
-@admin_blueprint.route('/share_links_1', methods= ['POST', 'GET'])
+@admin_blueprint.route('/share_links_1', methods= ['POST'])
 def share_links_1():
     if request.method == "POST":
         db = Client["studentdata"]
@@ -162,14 +178,25 @@ def share_links_1():
         links = list(collection.find())
         title = request.form.get('title', False)
         link = request.form.get('link', False)
-        json= {'title':title, 'link':link}
-        data= collection.insert_one(json)
 
-        if data:
-            return render_template('university/make_share_link_1.html')
-
+        json= {'title': title, 'link': links}
+        collection.insert_one(json)
+        return render_template('university/make_share_link_1.html')
     else:
         return render_template('university/make_share_link_1.html')
+
+
+@admin_blueprint.route('/share_liasfnks_1', methods= ['POST', 'GET'])
+def share_lin():
+    if request.method == "POST":
+        db = Client["studentdata"]
+        collection = db["Admin_sharelink"]
+        links = list(collection.find())
+        print(links)
+        if links:
+            return render_template('university/view_shared_links_1.html' ,  data= links)
+
+
 
 def share_link_post():
     if request.method == "POST":
@@ -187,6 +214,15 @@ def view_link_post():
     collection = db["Admin_sharelink"]
     links = list(collection.find())
     return render_template('university/view_shared_links.html', data= links)
+
+
+@admin_blueprint.route('/view_link_post_1', methods= ['GET', "POST"])
+def view_link_post_1():
+    db = Client["studentdata"]
+    collection = db["Admin_sharelink"]
+    links = list(collection.find())
+    return render_template('university/view_shared_links_1.html', data= links)
+
 
 @admin_blueprint.route('/share_resources', methods= ['POST'])
 def share_resources():
@@ -249,6 +285,7 @@ def share_resources_post():
 def view_shared_resources():
     if request.method == "POST":
         # Handle POST requests as needed
+
         pass
     else:
         files = os.listdir(r'C:/Users/Tejas Jagannatha/PycharmProjects/schoolcollab_Dissertation/shared_resources')
@@ -256,6 +293,23 @@ def view_shared_resources():
 
 @admin_blueprint.route('/view_shared_resources_1', methods=['GET', 'POST'])
 def view_shared_resources_1():
-    if request.method == "POST":
-        files = os.listdir(r'C:/Users/Tejas Jagannatha/PycharmProjects/schoolcollab_Dissertation/shared_resources')
-        return render_template('university/view_shared_resources_1.html', files=files)
+    files = os.listdir(r'C:/Users/Tejas Jagannatha/PycharmProjects/schoolcollab_Dissertation/shared_resources')
+    return render_template('university/view_shared_resources_1.html', files=files)
+
+
+
+
+# ----------------- ------   FOR DOWNLAODING SHARED RESOURCES ----------- USER SIDE --------
+@admin_blueprint.route('/download/<filename>')
+def download_file(filename):
+    filepath = os.path.join(PATH, filename)
+    print(filepath)
+    return send_file(filepath, as_attachment=True)
+
+
+# ----------------- ------   FOR DOWNLAODING SHARED RESOURCES ----------- USER SIDE --------
+@admin_blueprint.route('/download-1/<filename>')
+def download_file_1(filename):
+    filepath = os.path.join(PATH, filename)
+    print(filepath)
+    return send_file(filepath, as_attachment=True)
