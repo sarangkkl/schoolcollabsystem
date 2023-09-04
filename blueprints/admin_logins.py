@@ -18,15 +18,22 @@ def admin_login():
 
 @admin_blueprint.route('/ul_login_dash', methods=['GET', 'POST'])
 def ul_login_dash():
+<<<<<<< HEAD
     if request.method == "POST":
         if request.form['code'] == "123456":
             return render_template('university/Ul_landingpage.html')
+=======
+
+    return render_template("adminlogin/ul_admin.html")
+
+>>>>>>> 'testing-OTPfeature'
 
 
 @admin_blueprint.route('/dcu_login_dash', methods=['GET',"POST"])
 def dcu_login_dash():
     if request.method == "POST":
         cns = request.form.get('cns', False)
+
         if cns == '654321':
             return render_template("adminlogin/dcu-admin-dash.html")
         elif cns == '123456':
