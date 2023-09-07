@@ -279,12 +279,14 @@ def view_shared_resources():
 
         pass
     else:
-        files = os.listdir(r'C:/Users/Tejas Jagannatha/PycharmProjects/schoolcollab_Dissertation/shared_resources')
+        media_path = os.path.join(os.getcwd(), 'media')
+        files = os.listdir(media_path)
         return render_template('university/view_shared_resources.html', files=files)
 
 @admin_blueprint.route('/view_shared_resources_1', methods=['GET', 'POST'])
 def view_shared_resources_1():
-    files = os.listdir(r'C:/Users/Tejas Jagannatha/PycharmProjects/schoolcollab_Dissertation/shared_resources')
+    media_path = os.path.join(os.getcwd(), 'media')
+    files = os.listdir(media_path)
     return render_template('university/view_shared_resources_1.html', files=files)
 
 
