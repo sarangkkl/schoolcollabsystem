@@ -223,7 +223,7 @@ def share_resources():
 @admin_blueprint.route('/share_resources_1', methods= ['POST', 'GET'])
 def share_resources_1():
     if request.method == 'POST':
-        from schoolapp import app
+        from app import app
         from config import PATH
         app.config['UPLOAD_FOLDER']= PATH
         ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'xlsx', 'doc'}
@@ -251,7 +251,7 @@ def share_resources_1():
 @admin_blueprint.route('/post_shared_resources', methods= ['POST'])
 def share_resources_post():
     if request.method == 'POST':
-        from schoolapp import app
+        from app import app
         from config import PATH
         app.config['UPLOAD_FOLDER'] = PATH
         UPLOAD_FOLDER = '/path/to/upload/folder'

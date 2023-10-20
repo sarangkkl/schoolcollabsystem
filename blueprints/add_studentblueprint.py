@@ -31,7 +31,7 @@ def add_student_route(Message=None):
 
             # Sends mail to the student
             def send_mail(emailid):
-                from schoolapp import app
+                from app import app
                 mail = Mail(app)
                 msg = Message('Thanks for joining us!', sender='tejasjagannatha@gmail.com', recipients=[emailid])
                 msg.html = render_template('/mailingsystem/confirmationmail.html',name=name )

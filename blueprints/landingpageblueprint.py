@@ -72,7 +72,7 @@ def landingpage_route():
             hashed_password = sha256_hash.hexdigest()
 
             if hashed_password == stored_password:
-                from schoolapp import app
+                from app import app
                 mail = Mail(app)
                 msg = Message('Here is your Code', sender='tejasjagannatha@gmail.com', recipients=[stored_emailid])
                 key_obj, key_val = generate_otp.generate_otp()
