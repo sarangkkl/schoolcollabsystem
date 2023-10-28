@@ -178,11 +178,11 @@ def share_links_1():
     if request.method == "POST":
         db = Client["studentdata"]
         collection = db["Admin_sharelink_1"]
-        links = list(collection.find())
+        # links = list(collection.find())
         title = request.form.get('title', False)
         link = request.form.get('link', False)
 
-        json= {'title': title, 'link': links}
+        json= {'title': title, 'link': link}
         collection.insert_one(json)
         return render_template('university/make_share_link_1.html')
     else:
