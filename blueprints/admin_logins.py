@@ -164,7 +164,7 @@ def share_links():
     if request.method == "POST":
         db = Client["studentdata"]
         collection = db["Admin_sharelink"]
-        links = list(collection.find())
+        # links = list(collection.find())
         title = request.form.get('title', False)
         link = request.form.get('link', False)
         json= {'title':title, 'link' : link}
@@ -173,7 +173,7 @@ def share_links():
     else:
         return render_template('university/make_share_link.html')
 
-@admin_blueprint.route('/share_links_1', methods= ['POST'])
+@admin_blueprint.route('/share_links_1', methods= ['POST', 'GET'])
 def share_links_1():
     if request.method == "POST":
         db = Client["studentdata"]
