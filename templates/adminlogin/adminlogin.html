@@ -47,15 +47,16 @@
   </style>
 </head>
 <body>
-<form method="post" action="/dcu_login_dash">
+<!-- <form > -->
   <div class="container">
       <h2><b><i>Admin Controls</i></b></h2>
       <button class="button" onclick="navigateTo('/ul_login_dash')" name="ihs"> <b>Irshad High School</b></button>
       <button class="button" onclick="navigateTo('/dcu_login_dash')" name="cns"> <b>Colaiste Nano Nagle School</b></button>
   </div>
-</form>
+<!-- </form> -->
   <script>
     function navigateTo(route) {
+      // console.log(route)
       // Perform the necessary routing logic here.
       // For demonstration purposes, we'll just simulate changing the location.
       window.location.href = route;

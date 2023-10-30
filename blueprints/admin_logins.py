@@ -5,7 +5,7 @@ import pika
 from werkzeug.utils import secure_filename
 from gridfs import GridFS
 import bson,json, os
-from config import PATH
+from config import PATH,PATH2
 
 UL_ADMIN_CODE = '123456'
 DCU_ADMIN_CODE= '654321'
@@ -20,7 +20,7 @@ def admin_login():
 def ul_login_dash():
     if request.method == "POST":
         if request.form['code'] == "123456":
-            return render_template('university/Ul_landingpage.html')
+            return render_template("adminlogin/ul-admin-dash.html")
 
     return render_template("adminlogin/ul_admin.html")
 
@@ -32,11 +32,11 @@ def dcu_login_dash():
 
         if cns == '654321':
             return render_template("adminlogin/dcu-admin-dash.html")
-        elif cns == '123456':
-            return render_template("adminlogin/ul-admin-dash.html")
+        # elif cns == '123456':
+        #     return render_template("adminlogin/ul-admin-dash.html")
 
 
-        return render_template("adminlogin/dcu_admin.html")
+        return redirect('/dcu_login_dash')
 
 
     else:
@@ -65,7 +65,7 @@ def dcu_make_announcement_1():
         if title and link:
             db = Client["studentdata"]
             collection = db["Admin_announcement_1"]
-            announcement_json = {'title': title, 'link': link}
+            announcement_json = {'title': title, 'description': link}
             collection.insert_one(announcement_json)
             return "<h3>Thanks for making the announcement.</h3>"
         return render_template("university/make_announcement_1.html", success= True)
@@ -224,8 +224,8 @@ def share_resources():
 def share_resources_1():
     if request.method == 'POST':
         from app import app
-        from config import PATH
-        app.config['UPLOAD_FOLDER']= PATH
+        from config import PATH2
+        app.config['UPLOAD_FOLDER']= PATH2
         ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'xlsx', 'doc'}
 
         def allowed_file(filename):
