@@ -30,7 +30,7 @@ mail = Mail(app)
 app.config['SECRET_KEY'] = '/t-_"8]Bg:u?RP87!aGW&VrLxq!t&V[C'
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0',port=8000)
+    app.run(host='0.0.0.0')
 
     # Close the MongoDB connection always outside the function
     Client.close()
